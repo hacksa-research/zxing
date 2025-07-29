@@ -13,6 +13,6 @@ class KotlinCompilationTestCase {
   fun trivialTest() {
     val a = 1
     val b = 2
-      assertEquals(3, a + b, "1 + 2 should equal 3")
+    assertEquals(3, a + b, "1 + 2 should equal 3")
   }
 }
