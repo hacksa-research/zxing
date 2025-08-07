@@ -25,7 +25,7 @@ import com.google.zxing.qrcode.decoder.Version;
  * @author satorux@google.com (Satoru Takabayashi) - creator
  * @author dswitkin@google.com (Daniel Switkin) - ported from C++
  */
-final class MatrixUtil {
+public final class MatrixUtil {
 
   private static final int[][] POSITION_DETECTION_PATTERN = {
       {1, 1, 1, 1, 1, 1, 1},
@@ -123,13 +123,13 @@ final class MatrixUtil {
   //
   // JAVAPORT: We shouldn't need to do this at all. The code should be rewritten to begin encoding
   // with the ByteMatrix initialized all to zero.
-  static void clearMatrix(ByteMatrix matrix) {
+  public static void clearMatrix(ByteMatrix matrix) {
     matrix.clear((byte) -1);
   }
 
   // Build 2D matrix of QR Code from "dataBits" with "ecLevel", "version" and "getMaskPattern". On
   // success, store the result in "matrix" and return true.
-  static void buildMatrix(BitArray dataBits,
+  public static void buildMatrix(BitArray dataBits,
                           ErrorCorrectionLevel ecLevel,
                           Version version,
                           int maskPattern,
@@ -150,7 +150,7 @@ final class MatrixUtil {
   // - Timing patterns
   // - Dark dot at the left bottom corner
   // - Position adjustment patterns, if need be
-  static void embedBasicPatterns(Version version, ByteMatrix matrix) throws WriterException {
+  public static void embedBasicPatterns(Version version, ByteMatrix matrix) throws WriterException {
     // Let's get started with embedding big squares at corners.
     embedPositionDetectionPatternsAndSeparators(matrix);
     // Then, embed the dark dot at the left bottom corner.
@@ -163,7 +163,7 @@ final class MatrixUtil {
   }
 
   // Embed type information. On success, modify the matrix.
-  static void embedTypeInfo(ErrorCorrectionLevel ecLevel, int maskPattern, ByteMatrix matrix)
+  public static void embedTypeInfo(ErrorCorrectionLevel ecLevel, int maskPattern, ByteMatrix matrix)
       throws WriterException {
     BitArray typeInfoBits = new BitArray();
     makeTypeInfoBits(ecLevel, maskPattern, typeInfoBits);
@@ -196,7 +196,7 @@ final class MatrixUtil {
 
   // Embed version information if need be. On success, modify the matrix and return true.
   // See 8.10 of JISX0510:2004 (p.47) for how to embed version information.
-  static void maybeEmbedVersionInfo(Version version, ByteMatrix matrix) throws WriterException {
+  public static void maybeEmbedVersionInfo(Version version, ByteMatrix matrix) throws WriterException {
     if (version.getVersionNumber() < 7) {  // Version info is necessary if version >= 7.
       return;  // Don't need version info.
     }
@@ -220,7 +220,7 @@ final class MatrixUtil {
   // Embed "dataBits" using "getMaskPattern". On success, modify the matrix and return true.
   // For debugging purposes, it skips masking process if "getMaskPattern" is -1.
   // See 8.7 of JISX0510:2004 (p.38) for how to embed data bits.
-  static void embedDataBits(BitArray dataBits, int maskPattern, ByteMatrix matrix)
+  public static void embedDataBits(BitArray dataBits, int maskPattern, ByteMatrix matrix)
       throws WriterException {
     int bitIndex = 0;
     int direction = -1;

@@ -30,6 +30,7 @@ import com.google.zxing.oned.UPCAWriter;
 import com.google.zxing.oned.UPCEWriter;
 import com.google.zxing.pdf417.PDF417Writer;
 import com.google.zxing.qrcode.QRCodeWriter;
+import hacksa.zxing.qrcodehalftone.encoder.QRCodeHalftoneWriter;
 
 import java.util.Map;
 
@@ -95,6 +96,9 @@ public final class MultiFormatWriter implements Writer {
         break;
       case AZTEC:
         writer = new AztecWriter();
+        break;
+      case QR_CODE_HALFTONE:
+        writer = QRCodeHalftoneWriter.INSTANCE;
         break;
       default:
         throw new IllegalArgumentException("No encoder available for format " + format);

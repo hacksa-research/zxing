@@ -72,6 +72,9 @@ public enum BarcodeFormat {
   UPC_E,
 
   /** UPC/EAN extension format. Not a stand-alone format. */
-  UPC_EAN_EXTENSION
+  UPC_EAN_EXTENSION,
+
+  /** QR Code 2D barcode format in Halftone style. Not a stand-alone format. */
+  QR_CODE_HALFTONE
 
 }
