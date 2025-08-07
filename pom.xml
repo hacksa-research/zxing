@@ -17,17 +17,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.google.zxing</groupId>
+  <groupId>hacksa.zxing</groupId>
   <artifactId>zxing-parent</artifactId>
-  <version>3.5.4-SNAPSHOT</version>
+  <version>3.5.4-SNAPSHOT-HACKSA-1.0.0</version>
   <packaging>pom</packaging>
 
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>com.google.zxing</groupId>
+        <groupId>hacksa.zxing</groupId>
         <artifactId>core</artifactId>
-        <version>${zxing.version}</version>
+        <version>${hacksa.zxing.version}</version>
       </dependency>
       <dependency>
         <groupId>com.google.zxing</groupId>
@@ -40,9 +40,9 @@
         <version>${zxing.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.google.zxing</groupId>
+        <groupId>hacksa.zxing</groupId>
         <artifactId>javase</artifactId>
-        <version>${zxing.version}</version>
+        <version>${hacksa.zxing.version}</version>
       </dependency>
       <dependency>
         <groupId>junit</groupId>
@@ -69,15 +69,16 @@
     <proguard.plugin.version>2.6.1</proguard.plugin.version>
     <!-- This can't reference project.version as some subprojects version differently -->
     <zxing.version>3.5.4-SNAPSHOT</zxing.version>
+    <hacksa.zxing.version>3.5.4-SNAPSHOT-HACKSA-1.0.0</hacksa.zxing.version>
     <android.platform>22</android.platform>
   </properties>
 
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-      </plugin>
+<!--      <plugin>-->
+<!--        <groupId>org.apache.maven.plugins</groupId>-->
+<!--        <artifactId>maven-javadoc-plugin</artifactId>-->
+<!--      </plugin>-->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
@@ -161,27 +162,27 @@
             </execution>
           </executions>
         </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.11.2</version>
-          <configuration>
-            <source>${java.version}</source>
-            <quiet>true</quiet>
-            <notimestamp>true</notimestamp>
-            <encoding>${project.build.sourceEncoding}</encoding>
-            <docencoding>${project.reporting.outputEncoding}</docencoding>
-            <doclint>all</doclint>
-          </configuration>
-          <executions>
-            <execution>
-              <id>attach-javadocs</id>
-              <goals>
-                <goal>jar</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
+<!--        <plugin>-->
+<!--          <groupId>org.apache.maven.plugins</groupId>-->
+<!--          <artifactId>maven-javadoc-plugin</artifactId>-->
+<!--          <version>3.11.2</version>-->
+<!--          <configuration>-->
+<!--            <source>${java.version}</source>-->
+<!--            <quiet>true</quiet>-->
+<!--            <notimestamp>true</notimestamp>-->
+<!--            <encoding>${project.build.sourceEncoding}</encoding>-->
+<!--            <docencoding>${project.reporting.outputEncoding}</docencoding>-->
+<!--            <doclint>all</doclint>-->
+<!--          </configuration>-->
+<!--          <executions>-->
+<!--            <execution>-->
+<!--              <id>attach-javadocs</id>-->
+<!--              <goals>-->
+<!--                <goal>jar</goal>-->
+<!--              </goals>-->
+<!--            </execution>-->
+<!--          </executions>-->
+<!--        </plugin>-->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-clean-plugin</artifactId>
@@ -529,77 +530,77 @@
           </reportSet>
         </reportSets>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <inherited>false</inherited>
-        <reportSets>
-          <reportSet>
-            <id>aggregate</id>
-            <inherited>false</inherited>
-            <reports>
-              <report>aggregate</report>
-            </reports>
-            <configuration>
-              <excludePackageNames>com.google.zxing.client.android*,com.google.zxing.client.glass*,com.google.zxing.web.generator*</excludePackageNames>
-              <groups>
-                <group>
-                  <title>Common support code</title>
-                  <packages>com.google.zxing:com.google.zxing.common*:com.google.zxing.client.result*</packages>
-                </group>
-                <group>
-                  <title>One-dimensional barcode (UPC, EAN, etc) support</title>
-                  <packages>com.google.zxing.oned</packages>
-                </group>
-                <group>
-                  <title>QR Code support</title>
-                  <packages>com.google.zxing.qrcode*</packages>
-                </group>
-                <group>
-                  <title>Data Matrix support</title>
-                  <packages>com.google.zxing.datamatrix*</packages>
-                </group>
-                <group>
-                  <title>PDF417 barcode support</title>
-                  <packages>com.google.zxing.pdf417*</packages>
-                </group>
-                <group>
-                  <title>Aztec barcode support</title>
-                  <packages>com.google.zxing.aztec*</packages>
-                </group>
-                <group>
-                  <title>MaxiCode support</title>
-                  <packages>com.google.zxing.maxicode*</packages>
-                </group>
-                <group>
-                  <title>RSS barcode support</title>
-                  <packages>com.google.zxing.oned.rss*</packages>
-                </group>
-                <group>
-                  <title>Multiple barcode scanning support</title>
-                  <packages>com.google.zxing.multi*</packages>
-                </group>
-                <group>
-                  <title>Web-based decoder app</title>
-                  <packages>com.google.zxing.web</packages>
-                </group>
-                <group>
-                  <title>Web-based App Engine encoder app</title>
-                  <packages>com.google.zxing.web.generator*</packages>
-                </group>
-                <group>
-                  <title>JavaSE utilities and support</title>
-                  <packages>com.google.zxing.client.j2se*</packages>
-                </group>
-                <group>
-                  <title>Android Intent integration</title>
-                  <packages>com.google.zxing.integration.android*</packages>
-                </group>
-              </groups>
-            </configuration>
-          </reportSet>
-        </reportSets>
-      </plugin>
+<!--      <plugin>-->
+<!--        <groupId>org.apache.maven.plugins</groupId>-->
+<!--        <artifactId>maven-javadoc-plugin</artifactId>-->
+<!--        <inherited>false</inherited>-->
+<!--        <reportSets>-->
+<!--          <reportSet>-->
+<!--            <id>aggregate</id>-->
+<!--            <inherited>false</inherited>-->
+<!--            <reports>-->
+<!--              <report>aggregate</report>-->
+<!--            </reports>-->
+<!--            <configuration>-->
+<!--              <excludePackageNames>com.google.zxing.client.android*,com.google.zxing.client.glass*,com.google.zxing.web.generator*</excludePackageNames>-->
+<!--              <groups>-->
+<!--                <group>-->
+<!--                  <title>Common support code</title>-->
+<!--                  <packages>com.google.zxing:com.google.zxing.common*:com.google.zxing.client.result*</packages>-->
+<!--                </group>-->
+<!--                <group>-->
+<!--                  <title>One-dimensional barcode (UPC, EAN, etc) support</title>-->
+<!--                  <packages>com.google.zxing.oned</packages>-->
+<!--                </group>-->
+<!--                <group>-->
+<!--                  <title>QR Code support</title>-->
+<!--                  <packages>com.google.zxing.qrcode*</packages>-->
+<!--                </group>-->
+<!--                <group>-->
+<!--                  <title>Data Matrix support</title>-->
+<!--                  <packages>com.google.zxing.datamatrix*</packages>-->
+<!--                </group>-->
+<!--                <group>-->
+<!--                  <title>PDF417 barcode support</title>-->
+<!--                  <packages>com.google.zxing.pdf417*</packages>-->
+<!--                </group>-->
+<!--                <group>-->
+<!--                  <title>Aztec barcode support</title>-->
+<!--                  <packages>com.google.zxing.aztec*</packages>-->
+<!--                </group>-->
+<!--                <group>-->
+<!--                  <title>MaxiCode support</title>-->
+<!--                  <packages>com.google.zxing.maxicode*</packages>-->
+<!--                </group>-->
+<!--                <group>-->
+<!--                  <title>RSS barcode support</title>-->
+<!--                  <packages>com.google.zxing.oned.rss*</packages>-->
+<!--                </group>-->
+<!--                <group>-->
+<!--                  <title>Multiple barcode scanning support</title>-->
+<!--                  <packages>com.google.zxing.multi*</packages>-->
+<!--                </group>-->
+<!--                <group>-->
+<!--                  <title>Web-based decoder app</title>-->
+<!--                  <packages>com.google.zxing.web</packages>-->
+<!--                </group>-->
+<!--                <group>-->
+<!--                  <title>Web-based App Engine encoder app</title>-->
+<!--                  <packages>com.google.zxing.web.generator*</packages>-->
+<!--                </group>-->
+<!--                <group>-->
+<!--                  <title>JavaSE utilities and support</title>-->
+<!--                  <packages>com.google.zxing.client.j2se*</packages>-->
+<!--                </group>-->
+<!--                <group>-->
+<!--                  <title>Android Intent integration</title>-->
+<!--                  <packages>com.google.zxing.integration.android*</packages>-->
+<!--                </group>-->
+<!--              </groups>-->
+<!--            </configuration>-->
+<!--          </reportSet>-->
+<!--        </reportSets>-->
+<!--      </plugin>-->
     </plugins>
     <excludeDefaults>true</excludeDefaults>
   </reporting>
@@ -774,26 +775,26 @@
          <module>zxing.appspot.com</module>
       </modules>
     </profile>
-    <profile>
-      <id>javadoc-9</id>
-      <activation>
-        <jdk>[9,)</jdk>
-      </activation>
-      <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-javadoc-plugin</artifactId>
-              <configuration combine.children="append">
-                <!-- Choose HTML5 output over deprecated HTML 4.01 -->
-                <additionalOptions>-html5</additionalOptions>
-              </configuration>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-      </build>
-    </profile>
+<!--    <profile>-->
+<!--      <id>javadoc-9</id>-->
+<!--      <activation>-->
+<!--        <jdk>[9,)</jdk>-->
+<!--      </activation>-->
+<!--      <build>-->
+<!--        <pluginManagement>-->
+<!--          <plugins>-->
+<!--            <plugin>-->
+<!--              <groupId>org.apache.maven.plugins</groupId>-->
+<!--              <artifactId>maven-javadoc-plugin</artifactId>-->
+<!--              <configuration combine.children="append">-->
+<!--                &lt;!&ndash; Choose HTML5 output over deprecated HTML 4.01 &ndash;&gt;-->
+<!--                <additionalOptions>-html5</additionalOptions>-->
+<!--              </configuration>-->
+<!--            </plugin>-->
+<!--          </plugins>-->
+<!--        </pluginManagement>-->
+<!--      </build>-->
+<!--    </profile>-->
   </profiles>
 
 </project>
