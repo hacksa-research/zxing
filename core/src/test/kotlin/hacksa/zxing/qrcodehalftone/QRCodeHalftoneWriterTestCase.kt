@@ -19,7 +19,6 @@ import kotlin.test.assertTrue
 class QRCodeHalftoneWriterTestCase {
   companion object {
     private const val TEST_CONTENT = "Hello, Audrey!"
-    private val TEMP_IMAGE_PATH = Paths.get("src/test/resources/temp/qrcode/halftone")
   }
 
   @Test
