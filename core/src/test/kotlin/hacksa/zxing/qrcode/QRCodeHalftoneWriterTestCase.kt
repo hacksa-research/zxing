@@ -5,6 +5,7 @@ import com.google.zxing.common.HybridBinarizer
 import com.google.zxing.qrcode.encoder.ByteMatrix
 import com.google.zxing.qrcode.encoder.QRCode
 import hacksa.zxing.qrcodehalftone.encoder.QRCodeHalftoneWriter
+import java.nio.file.Files
 import java.nio.file.Paths
 import javax.imageio.ImageIO
 import kotlin.test.Test
@@ -114,15 +115,18 @@ class QRCodeHalftoneWriterTestCase {
         EncodeHintType.MARGIN to 1,
         EncodeHintType.QR_HALFTONE_BLOCK_SIZE to 3
       ))
-    val fileName = "${TEST_CONTENT.lowercase().replace(' ', '_')}.jpg"
-    MatrixToImageWriter.writeToPath(matrix, "jpg", TEMP_IMAGE_PATH.resolve(fileName))
+
+    val path = Files.createTempFile("hacksa_qrcode_halftone", ".png")
+    MatrixToImageWriter.writeToPath(matrix, "png", path)
+
     // And then decode it to validate the content
-    val file = TEMP_IMAGE_PATH.resolve(fileName).toFile()
-    val img = ImageIO.read(file)
+    val img = ImageIO.read(path.toFile())
     val binaryBitmap = BinaryBitmap(HybridBinarizer(BufferedImageLuminanceSource(img)))
     val result = MultiFormatReader().decode(binaryBitmap)
+
     // Clean up the temp file
-    file.delete()
+    Files.delete(path)
+
     assertEquals(TEST_CONTENT, result.text)
   }
 }
