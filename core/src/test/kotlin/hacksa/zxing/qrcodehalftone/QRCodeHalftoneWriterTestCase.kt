@@ -1,4 +1,4 @@
-package hacksa.zxing.qrcode
+package hacksa.zxing.qrcodehalftone
 
 import com.google.zxing.*
 import com.google.zxing.common.HybridBinarizer
