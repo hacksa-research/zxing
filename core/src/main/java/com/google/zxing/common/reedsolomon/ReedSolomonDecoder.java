@@ -16,6 +16,10 @@
 
 package com.google.zxing.common.reedsolomon;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * <p>Implements Reed-Solomon decoding, as the name implies.</p>
  *
@@ -41,9 +45,11 @@ package com.google.zxing.common.reedsolomon;
 public final class ReedSolomonDecoder {
 
   private final GenericGF field;
+  private List<Integer> lastErrorLocations;
 
   public ReedSolomonDecoder(GenericGF field) {
     this.field = field;
+    this.lastErrorLocations = new ArrayList<>();
   }
 
   /**
@@ -70,6 +76,7 @@ public final class ReedSolomonDecoder {
    * @throws ReedSolomonException if decoding fails for any reason
    */
   public int decodeWithECCount(int[] received, int twoS) throws ReedSolomonException {
+    lastErrorLocations.clear();
     GenericGFPoly poly = new GenericGFPoly(field, received);
     int[] syndromeCoefficients = new int[twoS];
     boolean noError = true;
@@ -96,8 +103,13 @@ public final class ReedSolomonDecoder {
         throw new ReedSolomonException("Bad error location");
       }
       received[position] = GenericGF.addOrSubtract(received[position], errorMagnitudes[i]);
+      lastErrorLocations.add(position);
     }
     return errorLocations.length;
+  }
+
+  public List<Integer> getErrorLocations() {
+    return new ArrayList<>(lastErrorLocations);
   }
 
   private GenericGFPoly[] runEuclideanAlgorithm(GenericGFPoly a, GenericGFPoly b, int R)
@@ -201,6 +213,21 @@ public final class ReedSolomonDecoder {
       }
     }
     return result;
+  }
+
+  // Error report
+  public String getErrorDetails(int[] received, int twoS) {
+    StringBuilder details = new StringBuilder();
+    GenericGFPoly poly = new GenericGFPoly(field, received);
+    int[] syndromeCoefficients = new int[twoS];
+    for (int i = 0; i < twoS; i++) {
+      int eval = poly.evaluateAt(field.exp(i + field.getGeneratorBase()));
+      syndromeCoefficients[syndromeCoefficients.length - 1 - i] = eval;
+    }
+    details.append("Syndrome coefficients: ").append(Arrays.toString(syndromeCoefficients)).append("\n");
+    details.append("Received length: ").append(received.length).append(", twoS: ").append(twoS).append("\n");
+    details.append("Error locations: ").append(lastErrorLocations.toString()).append("\n");
+    return details.toString();
   }
 
 }
