@@ -25,7 +25,7 @@ package com.google.zxing.common.reedsolomon;
  *
  * @author Sean Owen
  */
-final class GenericGFPoly {
+public final class GenericGFPoly {
 
   private final GenericGF field;
   private final int[] coefficients;
@@ -39,7 +39,7 @@ final class GenericGFPoly {
    * or if leading coefficient is 0 and this is not a
    * constant polynomial (that is, it is not the monomial "0")
    */
-  GenericGFPoly(GenericGF field, int[] coefficients) {
+  public GenericGFPoly(GenericGF field, int[] coefficients) {
     if (coefficients.length == 0) {
       throw new IllegalArgumentException();
     }
@@ -94,7 +94,7 @@ final class GenericGFPoly {
   /**
    * @return evaluation of this polynomial at a given point
    */
-  int evaluateAt(int a) {
+  public int evaluateAt(int a) {
     if (a == 0) {
       // Just return the x^0 coefficient
       return getCoefficient(0);

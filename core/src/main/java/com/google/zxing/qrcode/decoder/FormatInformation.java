@@ -24,7 +24,7 @@ package com.google.zxing.qrcode.decoder;
  * @see DataMask
  * @see ErrorCorrectionLevel
  */
-final class FormatInformation {
+public final class FormatInformation {
 
   private static final int FORMAT_INFO_MASK_QR = 0x5412;
 
@@ -131,7 +131,7 @@ final class FormatInformation {
     return null;
   }
 
-  ErrorCorrectionLevel getErrorCorrectionLevel() {
+  public ErrorCorrectionLevel getErrorCorrectionLevel() {
     return errorCorrectionLevel;
   }
 

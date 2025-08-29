@@ -38,7 +38,7 @@ public final class DecoderResult {
   private final int structuredAppendParity;
   private final int structuredAppendSequenceNumber;
   private final int symbologyModifier;
-  private List<List<Integer>> errorLocations;
+  private List<List<Integer>> errorPositions;
 
   public DecoderResult(byte[] rawBytes,
                        String text,
@@ -79,7 +79,7 @@ public final class DecoderResult {
     this.structuredAppendParity = saParity;
     this.structuredAppendSequenceNumber = saSequence;
     this.symbologyModifier = symbologyModifier;
-    this.errorLocations = null;
+    this.errorPositions = null;
   }
 
   /**
@@ -175,12 +175,12 @@ public final class DecoderResult {
     return symbologyModifier;
   }
 
-  public List<List<Integer>> getErrorLocations() {
-    return errorLocations;
+  public List<List<Integer>> getErrorPositions() {
+    return errorPositions;
   }
 
-  public void setErrorLocations(List<List<Integer>> errorLocations) {
-    this.errorLocations = errorLocations;
+  public void setErrorPositions(List<List<Integer>> errorLocations) {
+    this.errorPositions = errorLocations;
   }
 
 }

@@ -37,7 +37,7 @@ import java.util.Map;
  *
  * @author Sean Owen
  */
-final class DecodedBitStreamParser {
+public final class DecodedBitStreamParser {
 
   /**
    * See ISO 18004:2006, 6.4.4 Table 5
@@ -49,7 +49,7 @@ final class DecodedBitStreamParser {
   private DecodedBitStreamParser() {
   }
 
-  static DecoderResult decode(byte[] bytes,
+ public static DecoderResult decode(byte[] bytes,
                               Version version,
                               ErrorCorrectionLevel ecLevel,
                               Map<DecodeHintType,?> hints) throws FormatException {

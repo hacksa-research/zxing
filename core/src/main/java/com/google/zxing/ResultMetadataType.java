@@ -113,5 +113,9 @@ public enum ResultMetadataType {
    */
   SYMBOLOGY_IDENTIFIER,
 
-  ERROR_LOCATIONS;
+  /**
+   * QR Code-specific metadata.
+   * Stores the positions of the error blocks in the QR Code, if applicable.
+   */
+  QR_ERROR_POSITIONS;
 }

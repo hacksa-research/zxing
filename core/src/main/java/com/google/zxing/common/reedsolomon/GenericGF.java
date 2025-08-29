@@ -93,7 +93,7 @@ public final class GenericGF {
   /**
    * @return the monomial representing coefficient * x^degree
    */
-  GenericGFPoly buildMonomial(int degree, int coefficient) {
+  public GenericGFPoly buildMonomial(int degree, int coefficient) {
     if (degree < 0) {
       throw new IllegalArgumentException();
     }
@@ -110,21 +110,21 @@ public final class GenericGF {
    *
    * @return sum/difference of a and b
    */
-  static int addOrSubtract(int a, int b) {
+  public static int addOrSubtract(int a, int b) {
     return a ^ b;
   }
 
   /**
    * @return 2 to the power of a in GF(size)
    */
-  int exp(int a) {
+  public int exp(int a) {
     return expTable[a];
   }
 
   /**
    * @return base 2 log of a in GF(size)
    */
-  int log(int a) {
+  public int log(int a) {
     if (a == 0) {
       throw new IllegalArgumentException();
     }
