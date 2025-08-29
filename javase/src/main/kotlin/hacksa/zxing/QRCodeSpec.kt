@@ -8,24 +8,30 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
 import com.google.zxing.qrcode.encoder.Encoder
 import com.google.zxing.qrcode.encoder.QRCode
 import hacksa.zxing.qrcodehalftone.encoder.QRCodeHalftoneWriter
-import hacksa.zxing.qrcodehalftone.encoder.QRCodeHalftoneWriter.DEFAULT_BLOCK_SIZE
-import hacksa.zxing.qrcodehalftone.encoder.QRCodeHalftoneWriter.DEFAULT_QUIET_ZONE_SIZE
 
 /**
  * a data class to store the specification of a QR Code and the encoded matrix of itself.
  *
  * @author hej@an5on.com (Anson Ng)
  */
-data class QRCodeSpec(val content: String, val format: BarcodeFormat, val ratio: Int, val leftPaddingInPercentage: Double, val topPaddingInPercentage: Double, val zValue: Int, val imageConfig: MatrixToImageConfig = MatrixToImageConfig(), val hints: Map<EncodeHintType, Any>?) {
-  val code: QRCode
-  val bitMatrix: BitMatrix
+data class QRCodeSpec(val content: String, val format: BarcodeFormat, val ratio: Int, val leftPaddingInPercentage: Double, val topPaddingInPercentage: Double, val zValue: Int, val matrixToImageConfig: MatrixToImageConfig = MatrixToImageConfig(), val hints: Map<EncodeHintType, Any>?, val doEncode: Boolean = true) {
+  private val DEFAULT_BLOCK_SIZE = 1
+  private val DEFAULT_QUIET_ZONE_SIZE = 0
+
+  var code: QRCode?
+  var bitMatrix: BitMatrix?
   init {
     val errorCorrectionLevel = (hints?.get(EncodeHintType.ERROR_CORRECTION) as? String)
       ?.let { ErrorCorrectionLevel.valueOf(it) } ?: ErrorCorrectionLevel.L
     val quietZone = (hints?.get(EncodeHintType.MARGIN) as? Int) ?: DEFAULT_QUIET_ZONE_SIZE
     val blockSize = (hints?.get(EncodeHintType.QR_HALFTONE_BLOCK_SIZE) as? Int) ?: DEFAULT_BLOCK_SIZE
 
-    code = Encoder.encode(content, errorCorrectionLevel, hints)
-    bitMatrix = QRCodeHalftoneWriter.renderResult(code, 0, 0, quietZone, blockSize)
+    if (doEncode) {
+      code = Encoder.encode(content, errorCorrectionLevel, hints)
+      bitMatrix = QRCodeHalftoneWriter.renderResult(code!!, 0, 0, quietZone, blockSize)
+    } else {
+      code = null
+      bitMatrix = null
+    }
   }
 }
