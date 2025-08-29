@@ -19,12 +19,15 @@ package com.google.zxing.qrcode.decoder;
 import com.google.zxing.ChecksumException;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.FormatException;
+import com.google.zxing.ResultMetadataType;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.DecoderResult;
 import com.google.zxing.common.reedsolomon.GenericGF;
 import com.google.zxing.common.reedsolomon.ReedSolomonDecoder;
 import com.google.zxing.common.reedsolomon.ReedSolomonException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -147,18 +150,39 @@ public final class Decoder {
 
     // Error-correct and copy data blocks together into a stream of bytes
     int errorsCorrected = 0;
-    for (DataBlock dataBlock : dataBlocks) {
+    StringBuilder errorReport = new StringBuilder();
+    List<List<Integer>> allErrorLocations = new ArrayList<>();
+    for (int i = 0; i < dataBlocks.length; i++) {
+      DataBlock dataBlock = dataBlocks[i];
       byte[] codewordBytes = dataBlock.getCodewords();
       int numDataCodewords = dataBlock.getNumDataCodewords();
-      errorsCorrected += correctErrors(codewordBytes, numDataCodewords);
-      for (int i = 0; i < numDataCodewords; i++) {
-        resultBytes[resultOffset++] = codewordBytes[i];
+      try {
+        int blockErrors = correctErrors(codewordBytes, numDataCodewords);
+        errorsCorrected += blockErrors;
+        List<Integer> errorLocs = rsDecoder.getErrorLocations();
+        allErrorLocations.add(errorLocs != null ? errorLocs : new ArrayList<>());
+        System.out.println("Debug: Block " + i + " error locations: " + errorLocs); //Print result
+      } catch (ChecksumException e) {
+        errorReport.append("Error in block: ").append(e.getMessage()).append("\n");
+        allErrorLocations.add(new ArrayList<>());
       }
+      for (int j = 0; j < numDataCodewords; j++) {
+        resultBytes[resultOffset++] = codewordBytes[j];
+      }
+    }
+
+    if (errorReport.length() > 0) {
+      System.err.println("Decoding errors reported:\n" + errorReport.toString());
     }
 
     // Decode the contents of that stream of bytes
     DecoderResult result = DecodedBitStreamParser.decode(resultBytes, version, ecLevel, hints);
     result.setErrorsCorrected(errorsCorrected);
+    result.setErrorLocations(allErrorLocations); // Set error location to DecoderResult.java
+    Map<ResultMetadataType, Object> metadata = new java.util.HashMap<>();
+    metadata.put(ResultMetadataType.ERRORS_CORRECTED, errorsCorrected);
+    metadata.put(ResultMetadataType.ERROR_LOCATIONS, allErrorLocations);
+    result.setOther(metadata);
     return result;
   }
 
@@ -181,7 +205,9 @@ public final class Decoder {
     int errorsCorrected = 0;
     try {
       errorsCorrected = rsDecoder.decodeWithECCount(codewordsInts, codewordBytes.length - numDataCodewords);
-    } catch (ReedSolomonException ignored) {
+    } catch (ReedSolomonException e) {
+      String errorDetails = rsDecoder.getErrorDetails(codewordsInts, codewordBytes.length - numDataCodewords);
+      System.err.println("Reed-Solomon error: " + e.getMessage() + "\nDetails: " + errorDetails);
       throw ChecksumException.getChecksumInstance();
     }
     // Copy back into array of bytes -- only need to worry about the bytes that were data
