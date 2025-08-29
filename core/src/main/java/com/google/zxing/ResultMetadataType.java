@@ -112,4 +112,6 @@ public enum ResultMetadataType {
    * when prepending to the barcode content.
    */
   SYMBOLOGY_IDENTIFIER,
+
+  ERROR_LOCATIONS;
 }
