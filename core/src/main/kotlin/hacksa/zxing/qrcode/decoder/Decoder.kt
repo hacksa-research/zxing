@@ -19,7 +19,7 @@ import hacksa.zxing.common.reedsolomon.decodeWithErrorPositions
  * @throws ChecksumException if error correction fails
  *
  * @author hej@an5on.com (Anson Ng)
- * @author
+ * @author Hinson1186 (Hinson TO)
  */
 fun Decoder.decodeWithErrorPositions(bits: BitMatrix, hints: Map<DecodeHintType?, Any>?): DecoderResult {
   // Construct a parser and read version, error-correction level
