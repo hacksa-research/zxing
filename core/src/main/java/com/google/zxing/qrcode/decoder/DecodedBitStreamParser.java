@@ -43,16 +43,16 @@ public final class DecodedBitStreamParser {
    * See ISO 18004:2006, 6.4.4 Table 5
    */
   private static final char[] ALPHANUMERIC_CHARS =
-      "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:".toCharArray();
+    "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:".toCharArray();
   private static final int GB2312_SUBSET = 1;
 
   private DecodedBitStreamParser() {
   }
 
- public static DecoderResult decode(byte[] bytes,
-                              Version version,
-                              ErrorCorrectionLevel ecLevel,
-                              Map<DecodeHintType,?> hints) throws FormatException {
+  public static DecoderResult decode(byte[] bytes,
+                                     Version version,
+                                     ErrorCorrectionLevel ecLevel,
+                                     Map<DecodeHintType, ?> hints) throws FormatException {
     BitSource bits = new BitSource(bytes);
     StringBuilder result = new StringBuilder(50);
     List<byte[]> byteSegments = new ArrayList<>(1);
@@ -161,12 +161,12 @@ public final class DecodedBitStreamParser {
     }
 
     return new DecoderResult(bytes,
-                             result.toString(),
-                             byteSegments.isEmpty() ? null : byteSegments,
-                             ecLevel == null ? null : ecLevel.toString(),
-                             symbolSequence,
-                             parityData,
-                             symbologyModifier);
+      result.toString(),
+      byteSegments.isEmpty() ? null : byteSegments,
+      ecLevel == null ? null : ecLevel.toString(),
+      symbolSequence,
+      parityData,
+      symbologyModifier);
   }
 
   /**
@@ -248,7 +248,7 @@ public final class DecodedBitStreamParser {
                                         int count,
                                         CharacterSetECI currentCharacterSetECI,
                                         Collection<byte[]> byteSegments,
-                                        Map<DecodeHintType,?> hints) throws FormatException {
+                                        Map<DecodeHintType, ?> hints) throws FormatException {
     // Don't crash trying to read more bits than we have available.
     if (8 * count > bits.available()) {
       throw FormatException.getFormatInstance();

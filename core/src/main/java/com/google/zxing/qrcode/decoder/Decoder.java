@@ -19,15 +19,12 @@ package com.google.zxing.qrcode.decoder;
 import com.google.zxing.ChecksumException;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.FormatException;
-import com.google.zxing.ResultMetadataType;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.DecoderResult;
 import com.google.zxing.common.reedsolomon.GenericGF;
 import com.google.zxing.common.reedsolomon.ReedSolomonDecoder;
 import com.google.zxing.common.reedsolomon.ReedSolomonException;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -55,10 +52,10 @@ public final class Decoder {
    * @param image booleans representing white/black QR Code modules
    * @param hints decoding hints that should be used to influence decoding
    * @return text and bytes encoded within the QR Code
-   * @throws FormatException if the QR Code cannot be decoded
+   * @throws FormatException   if the QR Code cannot be decoded
    * @throws ChecksumException if error correction fails
    */
-  public DecoderResult decode(boolean[][] image, Map<DecodeHintType,?> hints)
+  public DecoderResult decode(boolean[][] image, Map<DecodeHintType, ?> hints)
       throws ChecksumException, FormatException {
     return decode(BitMatrix.parse(image), hints);
   }
@@ -70,13 +67,13 @@ public final class Decoder {
   /**
    * <p>Decodes a QR Code represented as a {@link BitMatrix}. A 1 or "true" is taken to mean a black module.</p>
    *
-   * @param bits booleans representing white/black QR Code modules
+   * @param bits  booleans representing white/black QR Code modules
    * @param hints decoding hints that should be used to influence decoding
    * @return text and bytes encoded within the QR Code
-   * @throws FormatException if the QR Code cannot be decoded
+   * @throws FormatException   if the QR Code cannot be decoded
    * @throws ChecksumException if error correction fails
    */
-  public DecoderResult decode(BitMatrix bits, Map<DecodeHintType,?> hints)
+  public DecoderResult decode(BitMatrix bits, Map<DecodeHintType, ?> hints)
       throws FormatException, ChecksumException {
 
     // Construct a parser and read version, error-correction level
@@ -130,7 +127,7 @@ public final class Decoder {
     }
   }
 
-  private DecoderResult decode(BitMatrixParser parser, Map<DecodeHintType,?> hints)
+  private DecoderResult decode(BitMatrixParser parser, Map<DecodeHintType, ?> hints)
       throws FormatException, ChecksumException {
     Version version = parser.readVersion();
     ErrorCorrectionLevel ecLevel = parser.readFormatInformation().getErrorCorrectionLevel();
@@ -169,7 +166,7 @@ public final class Decoder {
    * <p>Given data and error-correction codewords received, possibly corrupted by errors, attempts to
    * correct the errors in-place using Reed-Solomon error correction.</p>
    *
-   * @param codewordBytes data and error correction codewords
+   * @param codewordBytes    data and error correction codewords
    * @param numDataCodewords number of codewords that are data bytes
    * @return the number of errors corrected
    * @throws ChecksumException if error correction fails
