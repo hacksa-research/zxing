@@ -43,9 +43,9 @@ import java.util.Map;
  */
 public class QRCodeReader implements Reader {
 
-  private static final ResultPoint[] NO_POINTS = new ResultPoint[0];
+  public static final ResultPoint[] NO_POINTS = new ResultPoint[0];
 
-  private final Decoder decoder = new Decoder();
+  public final Decoder decoder = new Decoder();
 
   protected final Decoder getDecoder() {
     return decoder;
@@ -115,7 +115,7 @@ public class QRCodeReader implements Reader {
    * around it. This is a specialized method that works exceptionally fast in this special
    * case.
    */
-  private static BitMatrix extractPureBits(BitMatrix image) throws NotFoundException {
+  public static BitMatrix extractPureBits(BitMatrix image) throws NotFoundException {
 
     int[] leftTopBlack = image.getTopLeftOnBit();
     int[] rightBottomBlack = image.getBottomRightOnBit();

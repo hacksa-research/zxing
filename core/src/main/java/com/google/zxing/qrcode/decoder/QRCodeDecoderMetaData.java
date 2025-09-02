@@ -28,7 +28,7 @@ public final class QRCodeDecoderMetaData {
 
   private final boolean mirrored;
 
-  QRCodeDecoderMetaData(boolean mirrored) {
+  public QRCodeDecoderMetaData(boolean mirrored) {
     this.mirrored = mirrored;
   }
 

@@ -112,4 +112,10 @@ public enum ResultMetadataType {
    * when prepending to the barcode content.
    */
   SYMBOLOGY_IDENTIFIER,
+
+  /**
+   * QR Code-specific metadata.
+   * Stores the positions of the error blocks in the QR Code, if applicable.
+   */
+  QR_ERROR_POSITIONS;
 }

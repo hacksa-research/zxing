@@ -22,7 +22,7 @@ import com.google.zxing.common.BitMatrix;
 /**
  * @author Sean Owen
  */
-final class BitMatrixParser {
+public final class BitMatrixParser {
 
   private final BitMatrix bitMatrix;
   private Version parsedVersion;
@@ -33,7 +33,7 @@ final class BitMatrixParser {
    * @param bitMatrix {@link BitMatrix} to parse
    * @throws FormatException if dimension is not >= 21 and 1 mod 4
    */
-  BitMatrixParser(BitMatrix bitMatrix) throws FormatException {
+  public BitMatrixParser(BitMatrix bitMatrix) throws FormatException {
     int dimension = bitMatrix.getHeight();
     if (dimension < 21 || (dimension & 0x03) != 1) {
       throw FormatException.getFormatInstance();
@@ -48,7 +48,7 @@ final class BitMatrixParser {
    * @throws FormatException if both format information locations cannot be parsed as
    * the valid encoding of format information
    */
-  FormatInformation readFormatInformation() throws FormatException {
+  public FormatInformation readFormatInformation() throws FormatException {
 
     if (parsedFormatInfo != null) {
       return parsedFormatInfo;
@@ -93,7 +93,7 @@ final class BitMatrixParser {
    * @throws FormatException if both version information locations cannot be parsed as
    * the valid encoding of version information
    */
-  Version readVersion() throws FormatException {
+  public Version readVersion() throws FormatException {
 
     if (parsedVersion != null) {
       return parsedVersion;
@@ -150,7 +150,7 @@ final class BitMatrixParser {
    * @return bytes encoded within the QR Code
    * @throws FormatException if the exact number of bytes expected is not read
    */
-  byte[] readCodewords() throws FormatException {
+  public byte[] readCodewords() throws FormatException {
 
     FormatInformation formatInfo = readFormatInformation();
     Version version = readVersion();
@@ -207,7 +207,7 @@ final class BitMatrixParser {
   /**
    * Revert the mask removal done while reading the code words. The bit matrix should revert to its original state.
    */
-  void remask() {
+  public void remask() {
     if (parsedFormatInfo == null) {
       return; // We have no format information, and have no data mask
     }
@@ -224,14 +224,14 @@ final class BitMatrixParser {
    *
    * @param mirror Whether to read version and format information mirrored.
    */
-  void setMirror(boolean mirror) {
+  public void setMirror(boolean mirror) {
     parsedVersion = null;
     parsedFormatInfo = null;
     this.mirror = mirror;
   }
 
   /** Mirror the bit matrix in order to attempt a second reading. */
-  void mirror() {
+  public void mirror() {
     for (int x = 0; x < bitMatrix.getWidth(); x++) {
       for (int y = x + 1; y < bitMatrix.getHeight(); y++) {
         if (bitMatrix.get(x, y) != bitMatrix.get(y, x)) {

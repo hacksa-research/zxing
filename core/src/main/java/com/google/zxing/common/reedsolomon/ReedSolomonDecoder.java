@@ -40,7 +40,7 @@ package com.google.zxing.common.reedsolomon;
  */
 public final class ReedSolomonDecoder {
 
-  private final GenericGF field;
+  public final GenericGF field;
 
   public ReedSolomonDecoder(GenericGF field) {
     this.field = field;
@@ -100,7 +100,7 @@ public final class ReedSolomonDecoder {
     return errorLocations.length;
   }
 
-  private GenericGFPoly[] runEuclideanAlgorithm(GenericGFPoly a, GenericGFPoly b, int R)
+  public GenericGFPoly[] runEuclideanAlgorithm(GenericGFPoly a, GenericGFPoly b, int R)
       throws ReedSolomonException {
     // Assume a's degree is >= b's
     if (a.getDegree() < b.getDegree()) {
@@ -156,7 +156,7 @@ public final class ReedSolomonDecoder {
     return new GenericGFPoly[]{sigma, omega};
   }
 
-  private int[] findErrorLocations(GenericGFPoly errorLocator) throws ReedSolomonException {
+  public int[] findErrorLocations(GenericGFPoly errorLocator) throws ReedSolomonException {
     // This is a direct application of Chien's search
     int numErrors = errorLocator.getDegree();
     if (numErrors == 1) { // shortcut
@@ -176,7 +176,7 @@ public final class ReedSolomonDecoder {
     return result;
   }
 
-  private int[] findErrorMagnitudes(GenericGFPoly errorEvaluator, int[] errorLocations) {
+  public int[] findErrorMagnitudes(GenericGFPoly errorEvaluator, int[] errorLocations) {
     // This is directly applying Forney's Formula
     int s = errorLocations.length;
     int[] result = new int[s];
@@ -202,5 +202,4 @@ public final class ReedSolomonDecoder {
     }
     return result;
   }
-
 }

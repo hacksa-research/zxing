@@ -23,7 +23,7 @@ package com.google.zxing.qrcode.decoder;
  *
  * @author Sean Owen
  */
-final class DataBlock {
+public final class DataBlock {
 
   private final int numDataCodewords;
   private final byte[] codewords;
@@ -44,7 +44,7 @@ final class DataBlock {
    * @return DataBlocks containing original bytes, "de-interleaved" from representation in the
    *         QR Code
    */
-  static DataBlock[] getDataBlocks(byte[] rawCodewords,
+  public static DataBlock[] getDataBlocks(byte[] rawCodewords,
                                    Version version,
                                    ErrorCorrectionLevel ecLevel) {
 
@@ -111,11 +111,11 @@ final class DataBlock {
     return result;
   }
 
-  int getNumDataCodewords() {
+  public int getNumDataCodewords() {
     return numDataCodewords;
   }
 
-  byte[] getCodewords() {
+  public byte[] getCodewords() {
     return codewords;
   }
 

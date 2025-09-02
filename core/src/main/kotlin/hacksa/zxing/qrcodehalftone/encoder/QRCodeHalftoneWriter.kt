@@ -20,8 +20,8 @@ import kotlin.math.min
  */
 object QRCodeHalftoneWriter : Writer {
 
-  private const val DEFAULT_QUIET_ZONE_SIZE = 4
-  private const val DEFAULT_BLOCK_SIZE = 3
+  const val DEFAULT_QUIET_ZONE_SIZE = 4
+  const val DEFAULT_BLOCK_SIZE = 3
 
   @Throws(WriterException::class)
   override fun encode(contents: String, format: BarcodeFormat, width: Int, height: Int): BitMatrix =
