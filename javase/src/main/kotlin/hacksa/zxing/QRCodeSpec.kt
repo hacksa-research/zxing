@@ -14,7 +14,8 @@ import hacksa.zxing.qrcodehalftone.encoder.QRCodeHalftoneWriter
  *
  * @author hej@an5on.com (Anson Ng)
  */
-data class QRCodeSpec(val content: String, val format: BarcodeFormat, val ratio: Int, val leftPaddingInPercentage: Double, val topPaddingInPercentage: Double, val zValue: Int, val matrixToImageConfig: MatrixToImageConfig = MatrixToImageConfig(), val hints: Map<EncodeHintType, Any>?, val doEncode: Boolean = true) {
+data class QRCodeSpec(val content: String, val format: BarcodeFormat, val ratio: Double?, val leftPaddingInPercentage: Double, val topPaddingInPercentage: Double, val zValue: Int, val matrixToImageConfig: MatrixToImageConfig = MatrixToImageConfig(
+  MatrixToImageConfig.BLACK, 0x00000000), val hints: Map<EncodeHintType, Any>? = null, val doEncode: Boolean = true) {
   private val DEFAULT_BLOCK_SIZE = 1
   private val DEFAULT_QUIET_ZONE_SIZE = 0
 
