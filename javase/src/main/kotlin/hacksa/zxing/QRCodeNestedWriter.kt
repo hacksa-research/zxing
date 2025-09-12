@@ -6,6 +6,10 @@ import java.awt.Image
 import java.awt.image.BufferedImage
 import kotlin.math.max
 
+
+
+
+
 /**
  * Generate a Nested QR Code.
  * Provided here instead of core since it depends on
@@ -27,17 +31,22 @@ object QRCodeNestedWriter {
       if (specs[index].ratio == null) {
         newResult = it
       } else {
-        val innerWidth = max(it.width, (result.width * specs[index].ratio!!).toInt())
+        val innerWidth = max(it.width, (result.width * (specs[index].ratio!! - 1)).toInt())
         val innerImage: Image
         val graphics: Graphics2D
+
 
         if (it.width < innerWidth) {
           newResult = result
           graphics = newResult.createGraphics()
 
+
           innerImage = it.getScaledInstance(innerWidth, innerWidth, Image.SCALE_DEFAULT)
         } else {
-          val outerWidth = (innerWidth / specs[index].ratio!!).toInt()
+
+          print("outer qrcode larger")
+
+          val outerWidth = (innerWidth * specs[index].ratio!! ).toInt()
           newResult = BufferedImage(outerWidth, outerWidth, BufferedImage.TYPE_INT_ARGB)
           graphics = newResult.createGraphics()
           graphics.drawImage(result, 0, 0, outerWidth, outerWidth, null)
